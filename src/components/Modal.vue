@@ -1,14 +1,26 @@
 <template>
-  <div class="backdrop">
-      <div class="modal">
-          <p>Modal Content</p>
+<!-- Want to only backdrop to close modal and clicked at modal nothing happen -->
+  <div class="backdrop" @click.self="closeModal">
+      <div class="modal" :class="{sale : theme === 'sale' }">
+          <!-- It show when doesn't any parsing -->
+          <slot> Default Content </slot>
+          <div class="actions">
+              <!-- Link with slot name : links     (in v-slot) -->
+              <slot name="links"> </slot>
+          </div>
       </div>
   </div>
 </template>
 
 <script>
 export default {
-
+    name:'Modal',
+    props:["theme"],
+    methods: {
+        closeModal(){
+            this.$emit('close')
+        }
+    },
 }
 </script>
 
@@ -20,7 +32,6 @@ export default {
     background: white;
     border-radius: 10px;
 }
-
 .backdrop{
     top: 0;
     position: fixed;
@@ -28,5 +39,40 @@ export default {
     width: 100%;
     height: 100%;
 }
+.modal h1{
+    border: none;
+    color: #03cfb4;
+}
 
+.modal p {
+    font-style: normal;
+}
+
+.modal .actions {
+    text-align: center;
+    margin: 30px 0 10px 0;  
+}
+
+.modal .actions a {
+    color: #333;
+    padding: 8px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    text-decoration: none;
+    margin: 10px;
+}
+
+.modal.sale{
+    background: crimson;
+    color: white;
+}
+.modal.sale h1{
+    color: white;
+}
+.modal.sale .actions{
+    color: white;
+}
+.modal.sale .actions{
+    color: white;
+}
 </style>
